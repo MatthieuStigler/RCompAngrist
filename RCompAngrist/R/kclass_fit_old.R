@@ -36,8 +36,8 @@ kclass_fit_old <- function(y, x, z, k=NULL, x_exo, x_endo, eig=c("eigen", "geige
     
     ## as eigen:
     xy <- cbind(y,x_endo)
-    mat <<- t(xy)%*%My%*%xy
-    mat2 <<- t(xy)%*%Mz%*%xy
+    mat <- t(xy)%*%My%*%xy
+    mat2 <- t(xy)%*%Mz%*%xy
     if(eig=="eigen"){
       k <- min(eigen(mat%*%solve(mat2))$values)
     } else {
