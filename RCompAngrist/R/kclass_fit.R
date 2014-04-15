@@ -86,6 +86,8 @@ kclass_fit <- function(y, x, z, k=NULL, x_exo, x_endo, eig=c("eigen", "geigen"))
   
 }
 
+#' @rdname kclass_fit
+#' @export
 kclass_fit_QR <- function(y, x, z, k=NULL, x_exo, x_endo, eig=c("eigen", "geigen")){
   
   eig <- match.arg(eig)
@@ -210,6 +212,7 @@ kclass_fit_QR <- function(y, x, z, k=NULL, x_exo, x_endo, eig=c("eigen", "geigen
 ##### OLD code:
 if(FALSE){
  library(AER) 
+ library(RcompAngrist) 
  example(ivreg.fit, echo=FALSE)
  x <- model.matrix(fm, component="regressors")
  z2 <- model.matrix(fm, component="instruments")
@@ -219,13 +222,16 @@ if(FALSE){
  res_fit <- kclass_fit(y=log(dt_sub[,"packs", drop=FALSE]), x_exo=cbind(1,log(dt_sub[,"rincome", drop=FALSE])), x_endo= log(dt_sub[, "rprice", drop=FALSE]),
                                       z=cbind(1, with(dt_sub, tax/cpi), dt_sub$tdiff, log(dt_sub$rincome)), k=1)
 
+ res_fit2 <- kclass_fit(y=log(dt_sub[,"packs", drop=FALSE]), x_exo=cbind(1,log(dt_sub[,"rincome", drop=FALSE])), x_endo= log(dt_sub[, "rprice", drop=FALSE]),
+                       z=cbind(with(dt_sub, tax/cpi), dt_sub$tdiff), k=1)
+ 
  coef(res_fit)
- all.equal(coef(res_fit)[c(1,3,2)], ivreg.fit(x, as.matrix(y), z2)$coefficients, check=FALSE)
+ all.equal(coef(res_fit)[c(2,1,3)], ivreg.fit(x, as.matrix(y), z2)$coefficients, check.attributes=FALSE)
  
  res_fit_QR <- kclass_fit_QR(y=log(dt_sub[,"packs", drop=FALSE]), x_exo=cbind(1,log(dt_sub[,"rincome", drop=FALSE])), x_endo= log(dt_sub[, "rprice", drop=FALSE]),
                        z=cbind(with(dt_sub, tax/cpi), dt_sub$tdiff), k=1)
  coef(res_fit_QR)
- all.equal(coef(res_fit_QR)[c(2,1,3)], ivreg.fit(x, as.matrix(y), z2)$coefficients, check=FALSE)
+ all.equal(coef(res_fit_QR)[c(2,1,3)], ivreg.fit(x, as.matrix(y), z2)$coefficients, check.attributes=FALSE)
  
  ## LIML
  res_fit_LI <- kclass_fit(y=log(dt_sub[,"packs", drop=FALSE]), x_exo=cbind(1,log(dt_sub[,"rincome", drop=FALSE])), x_endo= log(dt_sub[, "rprice", drop=FALSE]),

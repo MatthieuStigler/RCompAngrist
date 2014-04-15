@@ -1,11 +1,14 @@
 \name{kclass_fit}
 \alias{kclass_fit}
+\alias{kclass_fit_QR}
 \title{kclass_fit
 K-class Instrumental Variable estimator, low-level function
 
 Compute the k-class IV, by default the LIML}
 \usage{
 kclass_fit(y, x, z, k = NULL, x_exo, x_endo, eig = c("eigen", "geigen"))
+
+kclass_fit_QR(y, x, z, k = NULL, x_exo, x_endo, eig = c("eigen", "geigen"))
 }
 \arguments{
   \item{y}{vector with dependent variable}
