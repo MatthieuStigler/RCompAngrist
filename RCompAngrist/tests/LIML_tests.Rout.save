@@ -42,8 +42,8 @@ Call:
 kclass(formula = log(packs) ~ log(rprice) + log(rincome) | log(rincome) +     tdiff + I(tax/cpi), data = CigarettesSW)
 
 Coefficients:
- (Intercept)  log(rincome)   log(rprice)  
-      9.7364        0.2568       -1.2291  
+ log(rprice)   (Intercept)  log(rincome)  
+     -1.2291        9.7364        0.2568  
 
 k:  1.000188 
 > res_kcl_2sls
@@ -55,8 +55,8 @@ Call:
 kclass(formula = log(packs) ~ log(rprice) + log(rincome) | log(rincome) +     tdiff + I(tax/cpi), data = CigarettesSW, k = 1)
 
 Coefficients:
- (Intercept)  log(rincome)   log(rprice)  
-      9.7365        0.2568       -1.2291  
+ log(rprice)   (Intercept)  log(rincome)  
+     -1.2291        9.7365        0.2568  
 
 k:  1 
 > res_ivreg
@@ -77,8 +77,8 @@ Call:
 kclass(formula = log(packs) ~ log(rprice) + log(rincome) | log(rincome) +     tdiff + I(tax/cpi), data = CigarettesSW, k = 0)
 
 Coefficients:
- (Intercept)  log(rincome)   log(rprice)  
-     10.0672        0.3181       -1.3342  
+ log(rprice)   (Intercept)  log(rincome)  
+     -1.3342       10.0672        0.3181  
 
 k:  0 
 > res_ols
@@ -97,16 +97,16 @@ Coefficients:
 > all.equal(residuals(res_ivreg), residuals(res_kcl_2sls))
 [1] TRUE
 > 
-> all.equal(coef(res_ols), coef(res_kcl_ols), check=FALSE)
+> all.equal(coef(res_ols), coef(res_kcl_ols)[c(2,3,1)])
 [1] TRUE
-> all.equal(coef(res_ivreg), coef(res_kcl_2sls), check=FALSE)
+> all.equal(coef(res_ivreg), coef(res_kcl_2sls)[c(2,3,1)])
 [1] TRUE
 > 
 > vcov(object=res_kcl_ols)
-              (Intercept) log(rincome) log(rprice)
-(Intercept)   0.265846927  0.001510215 -0.05767681
-log(rincome)  0.001510215  0.018528502 -0.01068866
-log(rprice)  -0.057676808 -0.010688656  0.01832272
+             log(rprice)  (Intercept) log(rincome)
+log(rprice)   0.01832272 -0.057676808 -0.010688656
+(Intercept)  -0.05767681  0.265846927  0.001510215
+log(rincome) -0.01068866  0.001510215  0.018528502
 > vcov(object=res_ols)
               (Intercept) log(rincome) log(rprice)
 (Intercept)   0.265846927  0.001510215 -0.05767681
@@ -115,28 +115,28 @@ log(rprice)  -0.057676808 -0.010688656  0.01832272
 > 
 > summary(object=res_kcl_ols)
                Estimate Std. Error   t value     Pr(>|t|)
+log(rprice)  -1.3341612  0.1353614 -9.856288 4.120472e-16
 (Intercept)  10.0671678  0.5156035 19.525020 1.158630e-34
 log(rincome)  0.3181371  0.1361194  2.337191 2.157508e-02
-log(rprice)  -1.3341612  0.1353614 -9.856288 4.120472e-16
 > coef(summary(object=res_ols))
                Estimate Std. Error   t value     Pr(>|t|)
 (Intercept)  10.0671678  0.5156035 19.525020 1.158630e-34
 log(rincome)  0.3181371  0.1361194  2.337191 2.157508e-02
 log(rprice)  -1.3341612  0.1353614 -9.856288 4.120472e-16
-> all.equal(summary(object=res_kcl_ols),coef(summary(object=res_ols)))
+> all.equal(coef(summary(object=res_ols)),summary(object=res_kcl_ols)[c(2,3,1),])
 [1] TRUE
 > 
 > summary(object=res_kcl_2sls)
               Estimate Std. Error   t value     Pr(>|t|)
+log(rprice)  -1.229101  0.1551542 -7.921806 4.935096e-12
 (Intercept)   9.736458  0.5686561 17.121872 1.677956e-30
 log(rincome)  0.256850  0.1434047  1.791084 7.653294e-02
-log(rprice)  -1.229101  0.1551542 -7.921806 4.935096e-12
 > coef(summary(object=res_ivreg))
               Estimate Std. Error   t value     Pr(>|t|)
 (Intercept)   9.736458  0.5686561 17.121872 1.677956e-30
 log(rincome)  0.256850  0.1434047  1.791084 7.653294e-02
 log(rprice)  -1.229101  0.1551542 -7.921806 4.935096e-12
-> all.equal(summary(object=res_kcl_2sls),coef(summary(object=res_ivreg)))
+> all.equal(coef(summary(object=res_ivreg)),summary(object=res_kcl_2sls)[c(2,3,1),])
 [1] TRUE
 > 
 > ## kclass_fit 
@@ -146,7 +146,7 @@ log(rprice)  -1.229101  0.1551542 -7.921806 4.935096e-12
 > 
 > res_fit_2sls <- kclass_fit(y=log(dt$packs), x_exo=cbind(1,log(dt$rincome)), x_endo= log(dt$rprice),
 +                                      z=cbind(1, with(dt, tax/cpi), dt$tdiff, log(dt$rincome)), k=1)
-> all.equal(coef(res_ivreg), coef(res_fit_2sls), check=FALSE)
+> all.equal(coef(res_ivreg), coef(res_fit_2sls)[c(2,3,1)], check.attributes=FALSE)
 [1] TRUE
 > 
 > ###### TESTING
@@ -169,8 +169,7 @@ Loading required package: foreign
 +                                  z=cbind(hsng2[, c("pcturban", "faminc", "regions")],1))
 > hs_kclass_fit_liml
 $coefficients
-                                   x_endo 
-117.608695099  -0.182739068   0.002668623 
+[1]   0.002668623 117.608695099  -0.182739068
 
 $residuals
  [1]   -9.10419944   61.46900462    9.66657413   -6.17549364  -43.95791981
@@ -197,10 +196,10 @@ $sigma
 [1] 25.77712
 
 $cov.unscaled
-                                          x_endo
-        4.750996e-01 -5.338970e-03 -2.014278e-06
-       -5.338970e-03  2.041809e-04 -1.718251e-07
-x_endo -2.014278e-06 -1.718251e-07  2.788098e-10
+              [,1]          [,2]          [,3]
+[1,]  2.788098e-10 -2.014278e-06 -1.718251e-07
+[2,] -2.014278e-06  4.750996e-01 -5.338970e-03
+[3,] -1.718251e-07 -5.338970e-03  2.041809e-04
 
 $eigen
 [1] 1.256906
@@ -215,21 +214,21 @@ $df
 > 
 > summary(res_stata, adj="df")
                  Estimate   Std. Error    t value     Pr(>|t|)
+hsngval       0.002668623  0.000430416  6.2001021 1.339276e-07
 (Intercept) 117.608695099 17.767515667  6.6193101 3.092856e-08
 pcturban     -0.182739068  0.368334136 -0.4961231 6.221198e-01
-hsngval       0.002668623  0.000430416  6.2001021 1.339276e-07
 > summary(res_stata, adj="n")
                  Estimate   Std. Error    t value     Pr(>|t|)
+hsngval       0.002668623 4.173038e-04  6.3949171 5.306180e-08
 (Intercept) 117.608695099 1.722625e+01  6.8272970 1.118076e-08
 pcturban     -0.182739068 3.571132e-01 -0.5117119 6.111054e-01
-hsngval       0.002668623 4.173038e-04  6.3949171 5.306180e-08
 > 
 > confint(res_stata)
                    2.5 %       97.5 %
+hsngval      0.001825023 3.512223e-03
 (Intercept) 82.785004297 1.524324e+02
 pcturban    -0.904660709 5.391826e-01
-hsngval      0.001825023 3.512223e-03
 > 
 > proc.time()
 utilisateur     système      écoulé 
-      0.756       0.036       1.657 
+      0.756       0.052       1.728 
