@@ -16,11 +16,3 @@ Imports:
 LazyLoad: yes
 Description: R code for the examples shown in the book
 License: GPL (>= 2)
-Collate:
-    'kclass.R'
-    'kclass_fit.R'
-    'Moulton.R'
-    'webuse.R'
-    'STAR_MHE-data.R'
-    'kclass_fit_new.R'
-    'kclass_fit_old.R'
