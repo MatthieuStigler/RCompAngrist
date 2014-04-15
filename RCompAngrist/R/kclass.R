@@ -148,11 +148,21 @@ print.kclass <- function(x,...){
   cat("Exo: ", x$x_exo, "\n")
   cat("Endo: ", x$x_endo, "\n")
   cat("Z: ", x$z, "\n")
-  AER:::print.ivreg(x)
+  print.ivreg.copy(x)
   
   cat("k: ", x$eigen, "\n")
 }
 
+## function copied from AER:::print.ivreg
+print.ivreg.copy <-function (x, digits = max(3, getOption("digits") - 3), ...) 
+{
+  cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
+  cat("Coefficients:\n")
+  print.default(format(coef(x), digits = digits), print.gap = 2, 
+                quote = FALSE)
+  cat("\n")
+  invisible(x)
+}
 
 #' @S3method vcov kclass
 vcov.kclass <- function (object, adj=c("df", "n"), ...) {
