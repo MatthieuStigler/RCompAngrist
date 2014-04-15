@@ -10,13 +10,9 @@ Depends:
 Imports:
     AER,
     Hmisc,
-    foreign
+    foreign,
+    Formula,
+    MASS
 LazyLoad: yes
 Description: R code for the examples shown in the book
 License: GPL (>= 2)
-Collate:
-    'kclass.R'
-    'kclass_fit.R'
-    'Moulton.R'
-    'webuse.R'
-    'STAR_MHE-data.R'
