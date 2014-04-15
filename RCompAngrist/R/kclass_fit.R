@@ -14,6 +14,17 @@
 #' @import geigen
 #' @examples
 #' require(AER)
+#' example(ivreg.fit, echo=FALSE)
+#' x <- model.matrix(fm, component="regressors")
+#' z2 <- model.matrix(fm, component="instruments")
+#' 
+#' ivreg.fit(x, as.matrix(y), z=z2)$coefficients
+#' dt_sub <- subset(CigarettesSW,  year == "1995")
+#' res_fit <- kclass_fit(y=with(dt_sub, log(packs)), x_exo=cbind(1,with(dt_sub, log(rincome))), x_endo= with(dt_sub, log(rprice)),
+#'                       z=cbind(with(dt_sub, tax/cpi), dt_sub$tdiff), k=1)
+#'                       
+#' coef(res_fit)
+#' all.equal(coef(res_fit)[c(2,1,3)], ivreg.fit(x, as.matrix(y), z2)$coefficients, check.attributes=FALSE)
 
 
 kclass_fit <- function(y, x, z, k=NULL, x_exo, x_endo, eig=c("eigen", "geigen")){
@@ -219,7 +230,7 @@ if(FALSE){
  
  ivreg.fit(x, as.matrix(y), z=z2)$coefficients
  dt_sub <- subset(CigarettesSW,  year == "1995")
- res_fit <- kclass_fit(y=log(dt_sub[,"packs", drop=FALSE]), x_exo=cbind(1,log(dt_sub[,"rincome", drop=FALSE])), x_endo= log(dt_sub[, "rprice", drop=FALSE]),
+ res_fit <- kclass_fit(y=with(dt_sub, log(packs)), x_exo=cbind(1,with(dt_sub, log(rincome))), x_endo= with(dt_sub, log(rprice)),
                                       z=cbind(1, with(dt_sub, tax/cpi), dt_sub$tdiff, log(dt_sub$rincome)), k=1)
 
  res_fit2 <- kclass_fit(y=log(dt_sub[,"packs", drop=FALSE]), x_exo=cbind(1,log(dt_sub[,"rincome", drop=FALSE])), x_endo= log(dt_sub[, "rprice", drop=FALSE]),

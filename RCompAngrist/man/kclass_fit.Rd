@@ -42,5 +42,16 @@ Compute the k-class IV, by default the LIML
 }
 \examples{
 require(AER)
+example(ivreg.fit, echo=FALSE)
+x <- model.matrix(fm, component="regressors")
+z2 <- model.matrix(fm, component="instruments")
+
+ivreg.fit(x, as.matrix(y), z=z2)$coefficients
+dt_sub <- subset(CigarettesSW,  year == "1995")
+res_fit <- kclass_fit(y=with(dt_sub, log(packs)), x_exo=cbind(1,with(dt_sub, log(rincome))), x_endo= with(dt_sub, log(rprice)),
+                      z=cbind(with(dt_sub, tax/cpi), dt_sub$tdiff), k=1)
+
+coef(res_fit)
+all.equal(coef(res_fit)[c(2,1,3)], ivreg.fit(x, as.matrix(y), z2)$coefficients, check.attributes=FALSE)
 }
 
