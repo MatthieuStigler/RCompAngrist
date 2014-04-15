@@ -27,11 +27,11 @@ res_kcl_ols
 res_ols
 
 
-all.equal(residuals(res_ols), residuals(res_kcl_ols), check=FALSE)
-all.equal(residuals(res_ivreg), residuals(res_kcl_2sls), check=FALSE)
+all.equal(residuals(res_ols), residuals(res_kcl_ols))
+all.equal(residuals(res_ivreg), residuals(res_kcl_2sls))
 
-all.equal(coef(res_ols), coef(res_kcl_ols)[c(2,3,1)], check=FALSE)
-all.equal(coef(res_ivreg), coef(res_kcl_2sls)[c(2,3,1)], check=FALSE)
+all.equal(coef(res_ols), coef(res_kcl_ols)[c(2,3,1)])
+all.equal(coef(res_ivreg), coef(res_kcl_2sls)[c(2,3,1)])
 
 vcov(object=res_kcl_ols)
 vcov(object=res_ols)
@@ -46,12 +46,12 @@ all.equal(coef(summary(object=res_ivreg)),summary(object=res_kcl_2sls)[c(2,3,1),
 
 ## kclass_fit 
 dt <- CigarettesSW
-res_fit <- RcompAngrist:::kclass_fit(y=log(dt$packs), x_exo=cbind(1,log(dt$rincome)), x_endo= log(dt$rprice),
+res_fit <- kclass_fit(y=log(dt$packs), x_exo=cbind(1,log(dt$rincome)), x_endo= log(dt$rprice),
                       z=cbind(1, with(dt, tax/cpi), dt$tdiff, log(dt$rincome)))
 
-res_fit_2sls <- RcompAngrist:::kclass_fit(y=log(dt$packs), x_exo=cbind(1,log(dt$rincome)), x_endo= log(dt$rprice),
+res_fit_2sls <- kclass_fit(y=log(dt$packs), x_exo=cbind(1,log(dt$rincome)), x_endo= log(dt$rprice),
                                      z=cbind(1, with(dt, tax/cpi), dt$tdiff, log(dt$rincome)), k=1)
-all.equal(coef(res_ivreg), coef(res_fit_2sls)[c(2,3,1)], check=FALSE)
+all.equal(coef(res_ivreg), coef(res_fit_2sls)[c(2,3,1)], check.attributes=FALSE)
 
 ###### TESTING
 res <- kclass(log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax/cpi),
@@ -67,7 +67,7 @@ hsng2 <- webuse(x="hsng2")
 hsng2$regions <- model.matrix(~region, data=hsng2)[,-1]
 res_stata <- kclass(rent ~ pcturban +hsngval| pcturban + faminc +region, data=hsng2)
 
-hs_kclass_fit_liml <-RcompAngrist:::kclass_fit(y=hsng2$rent, x_endo=hsng2$hsngval,x_exo=cbind(1,hsng2$pcturban ), 
+hs_kclass_fit_liml <-kclass_fit(y=hsng2$rent, x_endo=hsng2$hsngval,x_exo=cbind(1,hsng2$pcturban ), 
                                  z=cbind(hsng2[, c("pcturban", "faminc", "regions")],1))
 hs_kclass_fit_liml
 

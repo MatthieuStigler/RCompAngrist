@@ -31,8 +31,7 @@ Le chargement a nécessité le package : splines
 +                            data = CigarettesSW, k=0)
 > res_ivreg <- ivreg(log(packs) ~ log(rincome)+log(rprice) | log(rincome) + tdiff + I(tax/cpi),
 +                    data = CigarettesSW)
-> res_ols <- lm(log(packs) ~ log(rincome)+log(rprice) ,
-+               data = CigarettesSW)
+> res_ols <- lm(log(packs) ~ log(rincome)+log(rprice) ,data = CigarettesSW)
 > 
 > res 
 Exo:  (Intercept) log(rincome) 
@@ -93,9 +92,9 @@ Coefficients:
 
 > 
 > 
-> all.equal(residuals(res_ols), residuals(res_kcl_ols), check=FALSE)
+> all.equal(residuals(res_ols), residuals(res_kcl_ols))
 [1] TRUE
-> all.equal(residuals(res_ivreg), residuals(res_kcl_2sls), check=FALSE)
+> all.equal(residuals(res_ivreg), residuals(res_kcl_2sls))
 [1] TRUE
 > 
 > all.equal(coef(res_ols), coef(res_kcl_ols), check=FALSE)
@@ -142,10 +141,10 @@ log(rprice)  -1.229101  0.1551542 -7.921806 4.935096e-12
 > 
 > ## kclass_fit 
 > dt <- CigarettesSW
-> res_fit <- RcompAngrist:::kclass_fit(y=log(dt$packs), x_exo=cbind(1,log(dt$rincome)), x_endo= log(dt$rprice),
+> res_fit <- kclass_fit(y=log(dt$packs), x_exo=cbind(1,log(dt$rincome)), x_endo= log(dt$rprice),
 +                       z=cbind(1, with(dt, tax/cpi), dt$tdiff, log(dt$rincome)))
 > 
-> res_fit_2sls <- RcompAngrist:::kclass_fit(y=log(dt$packs), x_exo=cbind(1,log(dt$rincome)), x_endo= log(dt$rprice),
+> res_fit_2sls <- kclass_fit(y=log(dt$packs), x_exo=cbind(1,log(dt$rincome)), x_endo= log(dt$rprice),
 +                                      z=cbind(1, with(dt, tax/cpi), dt$tdiff, log(dt$rincome)), k=1)
 > all.equal(coef(res_ivreg), coef(res_fit_2sls), check=FALSE)
 [1] TRUE
@@ -155,7 +154,6 @@ log(rprice)  -1.229101  0.1551542 -7.921806 4.935096e-12
 +               data = CigarettesSW)
 > res_geig <- kclass(log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax/cpi),
 +               data = CigarettesSW, eig="geigen")
-Loading required package: geigen
 > 
 > res$call <- res_geig$call <- NULL
 > all.equal(res, res_geig)
@@ -167,7 +165,7 @@ Loading required package: foreign
 > hsng2$regions <- model.matrix(~region, data=hsng2)[,-1]
 > res_stata <- kclass(rent ~ pcturban +hsngval| pcturban + faminc +region, data=hsng2)
 > 
-> hs_kclass_fit_liml <-RcompAngrist:::kclass_fit(y=hsng2$rent, x_endo=hsng2$hsngval,x_exo=cbind(1,hsng2$pcturban ), 
+> hs_kclass_fit_liml <-kclass_fit(y=hsng2$rent, x_endo=hsng2$hsngval,x_exo=cbind(1,hsng2$pcturban ), 
 +                                  z=cbind(hsng2[, c("pcturban", "faminc", "regions")],1))
 > hs_kclass_fit_liml
 $coefficients
@@ -187,57 +185,13 @@ $residuals
 [46]   25.09309575  -18.73977079  -12.16333464   -1.57337148  -15.32697100
 
 $fitted
-          [,1]
- [1,] 197.1042
- [2,] 306.5310
- [3,] 253.3334
- [4,] 191.1755
- [5,] 326.9579
- [6,] 275.2695
- [7,] 283.0682
- [8,] 223.7213
- [9,] 223.0995
-[10,] 204.6776
-[11,] 420.4328
-[12,] 230.2310
-[13,] 246.2257
-[14,] 205.1477
-[15,] 215.2416
-[16,] 206.2992
-[17,] 199.5799
-[18,] 219.8146
-[19,] 210.0717
-[20,] 260.9158
-[21,] 231.7212
-[22,] 208.7589
-[23,] 250.2970
-[24,] 192.7560
-[25,] 203.0977
-[26,] 231.7603
-[27,] 204.9089
-[28,] 225.5828
-[29,] 207.5170
-[30,] 286.6869
-[31,] 236.1683
-[32,] 265.1917
-[33,] 225.5806
-[34,] 224.6347
-[35,] 224.5627
-[36,] 200.3190
-[37,] 262.6462
-[38,] 209.2893
-[39,] 227.1361
-[40,] 201.3891
-[41,] 206.7943
-[42,] 201.5721
-[43,] 207.3974
-[44,] 262.3036
-[45,] 224.3198
-[46,] 233.9069
-[47,] 213.7398
-[48,] 266.1633
-[49,] 235.5734
-[50,] 267.3270
+ [1] 197.1042 306.5310 253.3334 191.1755 326.9579 275.2695 283.0682 223.7213
+ [9] 223.0995 204.6776 420.4328 230.2310 246.2257 205.1477 215.2416 206.2992
+[17] 199.5799 219.8146 210.0717 260.9158 231.7212 208.7589 250.2970 192.7560
+[25] 203.0977 231.7603 204.9089 225.5828 207.5170 286.6869 236.1683 265.1917
+[33] 225.5806 224.6347 224.5627 200.3190 262.6462 209.2893 227.1361 201.3891
+[41] 206.7943 201.5721 207.3974 262.3036 224.3198 233.9069 213.7398 266.1633
+[49] 235.5734 267.3270
 
 $sigma
 [1] 25.77712
@@ -278,4 +232,4 @@ hsngval      0.001825023 3.512223e-03
 > 
 > proc.time()
 utilisateur     système      écoulé 
-      0.820       0.044       1.184 
+      0.756       0.036       1.657 
