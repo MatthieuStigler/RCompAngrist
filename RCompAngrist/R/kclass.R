@@ -8,8 +8,11 @@
 #' @param k The parameter of the k-class estimator. If missing, the LIML is computed.
 #' @param model,x,y If \code{TRUE} the corresponding components of
 #' the fit (the model frame, the model matrices , the response) are returned.
+#' @param subset an optional vector specifying a subset of observations to be used in the fitting process.
+#' @param useQR if low-level function kclass_fit_QR should be called. 
 #' @param \ldots Further argumetns passed to coeftest
 #' @return An object of class \code{kclass}
+#' @seealso \code{\link{kclass_fit}} for the low-level function
 #' @export
 #' @import AER
 #' @import Formula
