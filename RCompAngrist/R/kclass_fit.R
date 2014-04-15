@@ -10,6 +10,7 @@
 #' @param x_endo vector/matrix containing only the endogeneous x 
 #' @param eig Whether to use the simple eigenvectors on inverted system, or the generalized eigenvectors
 #' @return An object of class \code{kclass}
+#' @seealso \code{\link{kclass}} for the high-level function with formula approach
 #' @export
 #' @import geigen
 #' @examples
@@ -63,8 +64,7 @@ kclass_fit <- function(y, x, z, k=NULL, x_exo, x_endo, eig=c("eigen", "geigen"))
     if(eig=="eigen"){
       k <- min(eigen(y_MX_y%*%solve(y_MZ_y))$values)
     } else {
-      require(geigen)
-      k <- min(geigen:::geigen(y_MX_y, y_MZ_y, symmetric=TRUE, only.values=TRUE)$values)
+      k <- min(geigen(y_MX_y, y_MZ_y, symmetric=TRUE, only.values=TRUE)$values)
     }
   }
   
@@ -144,7 +144,7 @@ kclass_fit_QR <- function(y, x, z, k=NULL, x_exo, x_endo, eig=c("eigen", "geigen
   n_K2 <- K1 + (1:K2)
   n_G  <- (K1+K2) +(1:G)
   n_y  <- K1+K2+G+1
-  print(list(n_K1, n_K2, G, n_y))
+  #print(list(n_K1, n_K2, G, n_y))
   
   R_11 <- R_Z[n_K1, n_K1]
   R_13 <- R_Z[n_K1,n_G, drop=FALSE]
