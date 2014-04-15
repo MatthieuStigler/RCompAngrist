@@ -12,7 +12,8 @@ Imports:
     Hmisc,
     foreign,
     Formula,
-    MASS
+    MASS,
+    geigen
 LazyLoad: yes
 Description: R code for the examples shown in the book
 License: GPL (>= 2)
