@@ -13,9 +13,9 @@ The new functions are:
 
 Demo
 -----------------------
-See the [wiki](wiki) for the exhaustive list. 
+See the [wiki](http://github.com/MatthieuStigler/RCompAngrist/wiki/FIG_4.1.1) for the exhaustive list. 
 
-Figure [4.1.1](https://github.com/MatthieuStigler/RCompAngrist/wiki/FIG_4.1.1)
+Figure [4.1.1](http://github.com/MatthieuStigler/RCompAngrist/wiki/FIG_4.1.1)
 
 
 Installing **RcompAngrist**
