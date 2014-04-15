@@ -1,3 +1,21 @@
+#' @title kclass_fit
+#' K-class Instrumental Variable estimator, low-level function
+#' 
+#' Compute the k-class IV, by default the LIML
+#' @param y vector with dependent variable
+#' @param x regressor matrix, containing both exo and endo x
+#' @param z instrument matrix (need not include the exogeneous x)
+#' @param k The parameter of the k-class estimator. If missing, the LIML is computed.
+#' @param x_exo vector/matrix containing only the exogeneous x
+#' @param x_endo vector/matrix containing only the endogeneous x 
+#' @param eig Whether to use the simple eigenvectors on inverted system, or the generalized eigenvectors
+#' @return An object of class \code{kclass}
+#' @export
+#' @import geigen
+#' @examples
+#' require(AER)
+
+
 kclass_fit <- function(y, x, z, k=NULL, x_exo, x_endo, eig=c("eigen", "geigen")){
     
   eig <- match.arg(eig)
