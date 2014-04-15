@@ -54,4 +54,8 @@ res_fit <- kclass_fit(y=with(dt_sub, log(packs)), x_exo=cbind(1,with(dt_sub, log
 coef(res_fit)
 all.equal(coef(res_fit)[c(2,1,3)], ivreg.fit(x, as.matrix(y), z2)$coefficients, check.attributes=FALSE)
 }
+\seealso{
+\code{\link{kclass}} for the high-level function with
+formula approach
+}
 

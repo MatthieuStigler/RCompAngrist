@@ -2,8 +2,7 @@
 \alias{moulton}
 \title{Moulton correction for clustered standard errors}
 \usage{
-  moulton(lm, cluster, x = NULL, trace = FALSE,
-    custom = NULL)
+moulton(lm, cluster, x = NULL, trace = FALSE, custom = NULL)
 }
 \arguments{
   \item{lm}{Object of class \code{lm}}
@@ -17,9 +16,9 @@
   \item{custom}{User defined value to control for}
 }
 \value{
-  A matrix of coefficients, standard erros and t/p-values
+A matrix of coefficients, standard erros and t/p-values
 }
 \description{
-  Corrects
+Corrects
 }
 

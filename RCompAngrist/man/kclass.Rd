@@ -2,8 +2,8 @@
 \alias{kclass}
 \title{K-class Instrumental Variable estimator}
 \usage{
-  kclass(formula, instruments, data, subset, model = TRUE,
-    y = TRUE, x = FALSE, k = NULL, ...)
+kclass(formula, instruments, data, subset, model = TRUE, y = TRUE,
+  x = FALSE, k = NULL, useQR = TRUE, ...)
 }
 \arguments{
   \item{formula}{formula specification(s) of the regression
@@ -23,13 +23,19 @@
   components of the fit (the model frame, the model
   matrices , the response) are returned.}
 
+  \item{subset}{an optional vector specifying a subset of
+  observations to be used in the fitting process.}
+
+  \item{useQR}{if low-level function kclass_fit_QR should
+  be called.}
+
   \item{\ldots}{Further argumetns passed to coeftest}
 }
 \value{
-  An object of class \code{kclass}
+An object of class \code{kclass}
 }
 \description{
-  Compute the k-class IV, by default the LIML
+Compute the k-class IV, by default the LIML
 }
 \examples{
 require(AER)
@@ -49,5 +55,8 @@ summary(fm)
 fm_kcl <- kclass(log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax/cpi),
 data = subset(CigarettesSW, year == "1995"))
 summary(fm_kcl)
+}
+\seealso{
+\code{\link{kclass_fit}} for the low-level function
 }
 
