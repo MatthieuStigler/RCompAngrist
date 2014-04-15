@@ -175,7 +175,7 @@ kclass_fit_QR <- function(y, x, z, k=NULL, x_exo, x_endo, eig=c("eigen", "geigen
 #     solve(crossprod(R_34_34))
 #     tcrossprod(solve(R_34_34))
 #     require(geigen)
-#     k <- min(geigen:::geigen(y_MX_y, y_MZ_y, symmetric=TRUE, only.values=TRUE)$values)
+#     k <- min(geigen(y_MX_y, y_MZ_y, symmetric=TRUE, only.values=TRUE)$values)
   }
   
   ## M

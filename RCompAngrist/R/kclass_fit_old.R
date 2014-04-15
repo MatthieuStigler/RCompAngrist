@@ -9,11 +9,9 @@ kclass_fit_old <- function(y, x, z, k=NULL, x_exo, x_endo, eig=c("eigen", "geige
   if(missing(x_endo)) x_endo <- x
   
   ## Projection matrices
-  require(Matrix)
   I_n <- diag(n)
   Z_inv <- try(solve(crossprod(z)), silent=TRUE)
   if(inherits(Z_inv, "try-error")) {
-    require(MASS)
     Z_inv <- ginv(crossprod(z))
   }
   Pz <- z%*%Z_inv%*%t(z)
@@ -41,10 +39,9 @@ kclass_fit_old <- function(y, x, z, k=NULL, x_exo, x_endo, eig=c("eigen", "geige
     if(eig=="eigen"){
       k <- min(eigen(mat%*%solve(mat2))$values)
     } else {
-      require(geigen)
       cat("Geig!\n")
-      k <- min(geigen:::geigen(mat, mat2, symmetric=TRUE, only.values=TRUE)$values)
-      k2 <- min(geigen:::geigen(mat2, mat, symmetric=TRUE, only.values=TRUE)$values)
+      k <- min(geigen(mat, mat2, symmetric=TRUE, only.values=TRUE)$values)
+      k2 <- min(geigen(mat2, mat, symmetric=TRUE, only.values=TRUE)$values)
       print(k2)
     }
   }
