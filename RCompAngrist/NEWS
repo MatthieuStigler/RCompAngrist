@@ -1,0 +1,17 @@
+RDDtools 0.1-1
+===========
+Updated on 2014-15-04
+
+* Add kclass_fit_QR
+
+* Clean datasets
+
+* Version control with git, obtain clean output
+
+RDDtools 0.1
+===========
+Updated on 2013-06-02
+
+* Initial commit, containing webuse, kclass, (LIML), moulton, and many 
+
+
