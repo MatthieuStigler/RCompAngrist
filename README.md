@@ -13,9 +13,10 @@ The new functions are:
 
 Demo
 -----------------------
-See the [wiki](http://github.com/MatthieuStigler/RCompAngrist/wiki/FIG_4.1.1) for the exhaustive list. 
+The [wiki](http://github.com/MatthieuStigler/RCompAngrist/wiki/FIG_4.1.1) contains web examples, with code, of following tables/figures:
 
-Figure [4.1.1](http://github.com/MatthieuStigler/RCompAngrist/wiki/FIG_4.1.1)
+* Figure [4.1.1](http://github.com/MatthieuStigler/RCompAngrist/wiki/FIG_4.1.1)
+* Table [4.6.2](http://github.com/MatthieuStigler/RCompAngrist/wiki/TAB_4.6.2)
 
 
 Installing **RcompAngrist**
