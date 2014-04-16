@@ -26,5 +26,5 @@ NULL
 # AK91_b <- AK91
 # AK91_b$yob <- as.factor(AK91$yob)
 # AK91_b$qob <- as.factor(AK91$qob)
-# 
-# save(AK91_b, file="/home/matifou/Téléchargements/AngKrug91.rda")
+# AngKrug91 <- AK91_b
+# save(AngKrug91, file="/home/matifou/Téléchargements/AngKrug91.rda")
