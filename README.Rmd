@@ -27,5 +27,5 @@ This github website hosts the source code. One of the easiest ways to install th
 
 ```r
 library(devtools)
-install_github(repo = "RCompAngrist", username = "MatthieuStigler", subdir = "RcompAngrist")
+install_github(repo = "MatthieuStigler/RCompAngrist", subdir = "RCompAngrist")
 ```
